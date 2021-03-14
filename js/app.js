@@ -21,7 +21,8 @@
 
 //report : Create a property attached to the constructor function itself that keeps track of all the products that are currently being considered. 
 //After voting rounds have been completed, remove the event listeners on the product.
-// const imgs=document.getElementById('imgs');
+
+const imgs=document.getElementById('imgs');
 const leftSide=document.getElementById('leftSide');
 const middleSide=document.getElementById('middleSide');
 const rightSide=document.getElementById('rightSide');
@@ -32,9 +33,17 @@ const productName = ['chair', 'scissors', 'tauntaun', 'cthulhu', 'shark', 'unico
 function BusMallProducts (name){
   this.name=name,
   this.clicks = 0;
-  this.views = 0;
-  this.path=`./img/${name}.jpg`;
+  this.viewed = 0;
+  this.votes=0;
   BusMallProducts.all.push(this);
+
+  if (name === 'usb'){
+    this.path = `img/${name}.gif`; 
+  }else if (name === 'sweep'){
+    this.path = `img/${name}.png`; 
+  }else{
+    this.path = `img/${name}.jpg`;
+  }
 }
 
 //random
@@ -48,9 +57,8 @@ BusMallProducts.all=[];
 for(let i=0;i<productName.length;i++){
   new BusMallProducts(productName[i]);
 }
-
-//render
-function render() {
+//render images
+function renderImg() {
   const leftIndex=randomNumber(0,BusMallProducts.all.length-1);
   const leftRandomImg=BusMallProducts.all[leftIndex];
   leftSide.src=leftRandomImg.path;
@@ -69,6 +77,18 @@ function render() {
   middleSide.title=middleRandomImg.name;
   middleSide.alt=middleRandomImg.name;
 }
+renderImg();
+//click
+imgs.addEventListener('click',clickHandler);
 
-render();
-
+function clickHandler(event){
+  if (event.target.id === 'leftSide' || event.target.id === 'rightSide'|| event.target.id === 'middleSide'){
+    for(let i=0;i<BusMallProducts.all.length;i++){
+      if (BusMallProducts.all[i].name === event.target.title){
+        BusMallProducts.all[i].votes++;
+        console.table(BusMallProducts.all[i]);
+      }
+    }
+    renderImg();
+  }
+}
