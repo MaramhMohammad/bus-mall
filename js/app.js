@@ -8,9 +8,9 @@ const leftSide=document.getElementById('leftSide');
 const middleSide=document.getElementById('middleSide');
 const rightSide=document.getElementById('rightSide');
 let myList = document.getElementById('list');
+let button = document.createElement('button');
 
-let allImages = [];
-let clicked=0;
+// let clicked=0;
 let rounds = 25;
 BusMallProducts.all=[];
 
@@ -23,10 +23,8 @@ function BusMallProducts (name){
   this.votes=0;
   if (name === 'usb'){
     this.path = `img/${name}.gif`;
-
   }else if (name === 'sweep'){
     this.path = `img/${name}.png`;
-
   }else{
     this.path = `img/${name}.jpg`;
   }
@@ -34,14 +32,11 @@ function BusMallProducts (name){
 }
 
 
-
-
 //random
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//event
 for(let i=0;i<productName.length;i++){
   new BusMallProducts(productName[i]);
 }
@@ -67,8 +62,8 @@ function renderImg() {
   middleSide.alt=middleRandomImg.name;
 }
 renderImg();
-//click
 
+//click event
 imgs.addEventListener('click',clickHandler);
 
 function clickHandler(event){
@@ -76,24 +71,48 @@ function clickHandler(event){
     for(let i=0;i<BusMallProducts.all.length;i++){
       if (BusMallProducts.all[i].name === event.target.title){
         BusMallProducts.all[i].votes++;
+        BusMallProducts.all[i].viewed++;
         // console.table(BusMallProducts.all[i]);
       }
     }
+    console.log(event);
+    rounds-=1;
+    checkClicks();
+  }
+
+}
+
+function checkClicks (){
+  if (rounds === 0) {
+    imgs.removeEventListener('click', clickHandler);
+    alert('You are out of clicks');
+    renderButton();
+  }
+  else {
     renderImg();
   }
 }
 
-
 function renderList() {
-  for (let i = 0; i < allImages.length; i++) {
+  for (let i = 0; i < BusMallProducts.all.length; i++) {
     let liEl = document.createElement('li');
-    liEl.textContent = `${allImages[i].name} had ${allImages[i].clicks} votes and was shown ${allImages[i].viewed} times`;
+    liEl.textContent = `${BusMallProducts.all[i].name} had ${BusMallProducts.all[i].votes} votes and was shown ${BusMallProducts.all[i].viewed} times`;
     myList.appendChild(liEl);
   }
-  renderList();
+  // renderList();
 }
 
+function renderButton(){
+  button.innerHTML = 'View result';
+  // Append in main
+  let main = document.getElementsByTagName('main')[0];
+  main.appendChild(button);
+  // Add event handler
+  button.addEventListener ('click', function() {
+    renderList();
 
-if (clicked === rounds) {
-  imgs.removeEventListener('click', clickHandler);
-  renderList(); }
+  });
+}
+
+imgs.removeEventListener('click', renderButton);
+

@@ -7,7 +7,7 @@ body{
     margin: 0;
     bottom: 0px;
     text-align: center;
-    color: beige;
+    /* color: beige; */
     /* margin-right: 25px;
     margin-left: 15px; */
     width: 100%;
@@ -55,4 +55,15 @@ nav {
     /* margin: 5.15em; */
   }
   
-  
+  button {
+    margin-top: 20px;
+    line-height: 60px;
+    font-weight: bold;
+    color: beige;
+    padding: 0 40px;
+    background: rgb(78, 78, 78);
+    border: none;
+  }
+  button:hover {
+    background: lightsalmon;
+  }
