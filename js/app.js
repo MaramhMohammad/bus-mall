@@ -7,12 +7,14 @@ const imgs=document.getElementById('imgs');
 const leftSide=document.getElementById('leftSide');
 const middleSide=document.getElementById('middleSide');
 const rightSide=document.getElementById('rightSide');
-let myList = document.getElementById('list');
+// let myList = document.getElementById('list');
 let button = document.createElement('button');
 
 // let clicked=0;
 let rounds = 25;
 BusMallProducts.all=[];
+
+//
 
 
 //constructor function
@@ -75,7 +77,7 @@ function clickHandler(event){
         // console.table(BusMallProducts.all[i]);
       }
     }
-    console.log(event);
+    // console.log(event);
     rounds-=1;
     checkClicks();
   }
@@ -85,7 +87,7 @@ function clickHandler(event){
 function checkClicks (){
   if (rounds === 0) {
     imgs.removeEventListener('click', clickHandler);
-    alert('You are out of clicks');
+    alert('Thank you for voting, Scroll down to see the result ');
     renderButton();
   }
   else {
@@ -93,14 +95,24 @@ function checkClicks (){
   }
 }
 
-function renderList() {
-  for (let i = 0; i < BusMallProducts.all.length; i++) {
-    let liEl = document.createElement('li');
-    liEl.textContent = `${BusMallProducts.all[i].name} had ${BusMallProducts.all[i].votes} votes and was shown ${BusMallProducts.all[i].viewed} times`;
-    myList.appendChild(liEl);
-  }
-  // renderList();
-}
+// function renderList() {
+//   for (let i = 0; i < BusMallProducts.all.length; i++) {
+//     let liEl = document.createElement('li');
+//     liEl.textContent = `${BusMallProducts.all[i].name} had ${BusMallProducts.all[i].votes} votes and was shown ${BusMallProducts.all[i].viewed} times`;
+//     myList.appendChild(liEl);
+//   }
+// renderList();
+// }
+
+
+//noDuplicateCheck= [];
+
+
+// function checkRender(){
+ 
+//   while  noDuplicateCheck.includes() 
+// }
+
 
 function renderButton(){
   button.innerHTML = 'View result';
@@ -109,10 +121,73 @@ function renderButton(){
   main.appendChild(button);
   // Add event handler
   button.addEventListener ('click', function() {
-    renderList();
-
+    // renderList();
+    createChart();
   });
 }
-
 imgs.removeEventListener('click', renderButton);
+
+
+
+function createChart(){
+
+  let context = document.getElementById('myChart').getContext('2d');
+  let namesArr=[];
+  let votesArr=[];
+  let viewedArr=[];
+
+  for(let i=0;i<BusMallProducts.all.length;i++){
+    namesArr.push(BusMallProducts.all[i].name);
+  }
+  for(let i=0;i<BusMallProducts.all.length;i++){
+    viewedArr.push(BusMallProducts.all[i].viewed);
+  }
+
+  for(let i=0;i<BusMallProducts.all.length;i++){
+    votesArr.push(BusMallProducts.all[i].votes);
+  }
+
+
+  let chartObject={
+    type: 'bar',
+    data: {
+      labels: namesArr,
+      datasets: [{
+        label: 'votes',
+        data: votesArr,
+        backgroundColor: ['rgb(100, 99, 132)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'],
+
+        borderColor: [ 'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)','rgb(255, 99, 132)'],
+        borderWidth: 1
+      }, {
+        label: 'views',
+        data: viewedArr,
+        backgroundColor: 'rgb(100, 40, 160)',
+        borderColor: 'rgb(158, 50, 12)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          beginAtZero:true
+        }]
+      }
+    }
+  };
+  // eslint-disable-next-line no-undef
+  let myChart = new Chart (context,chartObject);
+  console.log(myChart);
+}
 
