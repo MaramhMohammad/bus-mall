@@ -12,6 +12,7 @@ let button = document.createElement('button');
 
 // let clicked=0;
 let rounds = 25;
+
 BusMallProducts.all=[];
 
 //
@@ -38,46 +39,73 @@ function BusMallProducts (name){
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 for(let i=0;i<productName.length;i++){
+
   new BusMallProducts(productName[i]);
+
 }
 
 //render images
 function renderImg() {
+
   const leftIndex=randomNumber(0,BusMallProducts.all.length-1);
   const leftRandomImg=BusMallProducts.all[leftIndex];
-  leftSide.src=leftRandomImg.path;
-  leftSide.title=leftRandomImg.name;
-  leftSide.alt=leftRandomImg.name;
 
   const rightIndex=randomNumber(0,BusMallProducts.all.length-1);
   const rightRandomImg=BusMallProducts.all[rightIndex];
-  rightSide.src=rightRandomImg.path;
-  rightSide.title=rightRandomImg.name;
-  rightSide.alt=rightRandomImg.name;
 
   const middleIndex=randomNumber(0,BusMallProducts.all.length-1);
   const middleRandomImg=BusMallProducts.all[middleIndex];
-  middleSide.src=middleRandomImg.path;
-  middleSide.title=middleRandomImg.name;
-  middleSide.alt=middleRandomImg.name;
 
-  BusMallProducts.all[leftIndex].viewed++;
-  BusMallProducts.all[middleIndex].viewed++;
-  BusMallProducts.all[rightIndex].viewed++;
+  if (rightRandomImg!== leftRandomImg && middleRandomImg !==rightRandomImg&&leftRandomImg!==middleRandomImg){
+
+    leftSide.src=leftRandomImg.path;
+    leftSide.title=leftRandomImg.name;
+    leftSide.alt=leftRandomImg.name;
+
+
+    rightSide.src=rightRandomImg.path;
+    rightSide.title=rightRandomImg.name;
+    rightSide.alt=rightRandomImg.name;
+
+
+    middleSide.src=middleRandomImg.path;
+    middleSide.title=middleRandomImg.name;
+    middleSide.alt=middleRandomImg.name;
+
+
+
+    BusMallProducts.all[leftIndex].viewed++;
+    BusMallProducts.all[middleIndex].viewed++;
+    BusMallProducts.all[rightIndex].viewed++;
+  }
+
 }
+
 renderImg();
+
+
+const unique = (elem, index, productName) => {
+  for (let i = 0; i < index; i++) {
+    if (productName[i] === elem) return false;
+  }
+  return true;
+};
+productName.filter(unique);
+//source https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+
+
 
 //click event
 imgs.addEventListener('click',clickHandler);
 
 function clickHandler(event){
+
   if (event.target.id === 'leftSide' || event.target.id === 'rightSide'|| event.target.id === 'middleSide'){
 
     for(let i=0;i<BusMallProducts.all.length;i++){
-      if (BusMallProducts.all[i].name === event.target.title){
-        BusMallProducts.all[i].votes++;
+      if (BusMallProducts.all[i].name === event.target.title){ BusMallProducts.all[i].votes++;
+
         // BusMallProducts.all[i].viewed++;
 
         // console.table(BusMallProducts.all[i]);
@@ -85,12 +113,17 @@ function clickHandler(event){
     }
     // console.log(event);
     rounds-=1;
+    // checkDuplicate();
     checkClicks();
-  }
 
+  }
+  // let checkD = [...new Set(productName)];
+  // checkD.forEach(data=>console.log(data));
 }
 
+
 function checkClicks (){
+
   if (rounds === 0) {
     imgs.removeEventListener('click', clickHandler);
     alert('Thank you for voting, Scroll down to see the result ');
@@ -98,8 +131,31 @@ function checkClicks (){
   }
   else {
     renderImg();
+
   }
 }
+
+// function checkDuplicate(){
+//   let randomImageIndex = renderImg();
+//   let newImg =[];
+//   while (){
+//     if(!leftSide.includes(randomImageIndex) && !middleSide.includes(randomImageIndex)&& !rightSide.includes(randomImageIndex) )
+
+//     {
+//       {
+//         newImg.push(randomImageIndex);
+//         BusMallProducts.all[randomImageIndex].viewed++;
+//         randomImageIndex.src=BusMallProducts.all[randomImageIndex].path;
+//         randomImageIndex.title=BusMallProducts.all[randomImageIndex].name;
+//         renderImg();
+//         checkClicks();
+
+//       }
+
+//     }
+//   }
+// }
+
 
 // function renderList() {
 //   for (let i = 0; i < BusMallProducts.all.length; i++) {
@@ -109,6 +165,7 @@ function checkClicks (){
 //   }
 // renderList();
 // }
+
 
 
 //noDuplicateCheck= [];
@@ -202,4 +259,3 @@ function createChart(){
   let myChart = new Chart (context,chartObject);
   console.log(myChart);
 }
-
