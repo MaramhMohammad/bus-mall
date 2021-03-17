@@ -62,6 +62,10 @@ function renderImg() {
   middleSide.src=middleRandomImg.path;
   middleSide.title=middleRandomImg.name;
   middleSide.alt=middleRandomImg.name;
+
+  BusMallProducts.all[leftIndex].viewed++;
+  BusMallProducts.all[middleIndex].viewed++;
+  BusMallProducts.all[rightIndex].viewed++;
 }
 renderImg();
 
@@ -70,10 +74,12 @@ imgs.addEventListener('click',clickHandler);
 
 function clickHandler(event){
   if (event.target.id === 'leftSide' || event.target.id === 'rightSide'|| event.target.id === 'middleSide'){
+
     for(let i=0;i<BusMallProducts.all.length;i++){
       if (BusMallProducts.all[i].name === event.target.title){
         BusMallProducts.all[i].votes++;
-        BusMallProducts.all[i].viewed++;
+        // BusMallProducts.all[i].viewed++;
+
         // console.table(BusMallProducts.all[i]);
       }
     }
@@ -109,8 +115,8 @@ function checkClicks (){
 
 
 // function checkRender(){
- 
-//   while  noDuplicateCheck.includes() 
+
+//   while  noDuplicateCheck.includes()
 // }
 
 
@@ -136,8 +142,10 @@ function createChart(){
   let votesArr=[];
   let viewedArr=[];
 
+
   for(let i=0;i<BusMallProducts.all.length;i++){
     namesArr.push(BusMallProducts.all[i].name);
+
   }
   for(let i=0;i<BusMallProducts.all.length;i++){
     viewedArr.push(BusMallProducts.all[i].viewed);
@@ -147,6 +155,10 @@ function createChart(){
     votesArr.push(BusMallProducts.all[i].votes);
   }
 
+  // for (let j=0;j<BusMall.all.length;j++){
+  //   viewsArray.push(BusMall.all[j].views);
+  //   // console.log(BusMall.all[j].views);
+  //   clickArray.push(BusMall.all[j].vote);}
 
   let chartObject={
     type: 'bar',
