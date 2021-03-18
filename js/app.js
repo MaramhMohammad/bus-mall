@@ -78,21 +78,21 @@ function renderImg() {
     BusMallProducts.all[leftIndex].viewed++;
     BusMallProducts.all[middleIndex].viewed++;
     BusMallProducts.all[rightIndex].viewed++;
+
   }
 
 }
 
 renderImg();
 
-
-const unique = (elem, index, productName) => {
-  for (let i = 0; i < index; i++) {
-    if (productName[i] === elem) return false;
-  }
-  return true;
-};
-productName.filter(unique);
-//source https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+// const unique = (elem, index, productName) => {
+//   for (let i = 0; i < index; i++) {
+//     if (productName[i] === elem) return false;
+//   }
+//   return true;
+// };
+// productName.filter(unique);
+// //source https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
 
 
 
@@ -105,7 +105,7 @@ function clickHandler(event){
 
     for(let i=0;i<BusMallProducts.all.length;i++){
       if (BusMallProducts.all[i].name === event.target.title){ BusMallProducts.all[i].votes++;
-
+        localStorage.setItem('prodcts', JSON.stringify(BusMallProducts.all));
         // BusMallProducts.all[i].viewed++;
 
         // console.table(BusMallProducts.all[i]);
@@ -134,6 +134,19 @@ function checkClicks (){
 
   }
 }
+
+
+function getprodcts(){
+  // retrieve data from local storage
+  const data = localStorage.getItem('prodcts');
+  if (data){
+    const gitData=JSON.parse(data);
+    BusMallProducts.all=gitData;
+  }
+  return JSON.parse(data);
+}
+getprodcts();
+
 
 // function checkDuplicate(){
 //   let randomImageIndex = renderImg();
