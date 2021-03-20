@@ -85,15 +85,6 @@ function renderImg() {
 
 renderImg();
 
-// const unique = (elem, index, productName) => {
-//   for (let i = 0; i < index; i++) {
-//     if (productName[i] === elem) return false;
-//   }
-//   return true;
-// };
-// productName.filter(unique);
-// //source https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
-
 
 
 //click event
@@ -148,46 +139,6 @@ function getprodcts(){
 getprodcts();
 
 
-// function checkDuplicate(){
-//   let randomImageIndex = renderImg();
-//   let newImg =[];
-//   while (){
-//     if(!leftSide.includes(randomImageIndex) && !middleSide.includes(randomImageIndex)&& !rightSide.includes(randomImageIndex) )
-
-//     {
-//       {
-//         newImg.push(randomImageIndex);
-//         BusMallProducts.all[randomImageIndex].viewed++;
-//         randomImageIndex.src=BusMallProducts.all[randomImageIndex].path;
-//         randomImageIndex.title=BusMallProducts.all[randomImageIndex].name;
-//         renderImg();
-//         checkClicks();
-
-//       }
-
-//     }
-//   }
-// }
-
-
-// function renderList() {
-//   for (let i = 0; i < BusMallProducts.all.length; i++) {
-//     let liEl = document.createElement('li');
-//     liEl.textContent = `${BusMallProducts.all[i].name} had ${BusMallProducts.all[i].votes} votes and was shown ${BusMallProducts.all[i].viewed} times`;
-//     myList.appendChild(liEl);
-//   }
-// renderList();
-// }
-
-
-
-//noDuplicateCheck= [];
-
-
-// function checkRender(){
-
-//   while  noDuplicateCheck.includes()
-// }
 
 
 function renderButton(){
@@ -225,10 +176,6 @@ function createChart(){
     votesArr.push(BusMallProducts.all[i].votes);
   }
 
-  // for (let j=0;j<BusMall.all.length;j++){
-  //   viewsArray.push(BusMall.all[j].views);
-  //   // console.log(BusMall.all[j].views);
-  //   clickArray.push(BusMall.all[j].vote);}
 
   let chartObject={
     type: 'bar',
